@@ -3,5 +3,7 @@ import TeamController from "../controllers/TeamController";
 
 const router = Router();
 
-router.get("/", TeamController.store);
+router.post("/", TeamController.store);
+router.get("/", TeamController.index);
+
 export default router;
