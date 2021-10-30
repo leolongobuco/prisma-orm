@@ -57,7 +57,7 @@ Route List:
 - /teams
 - /token
 
-(start with token)
+(start with user)
 
 <img
 	src="https://media.giphy.com/media/26FPqAHtgCBzKG9mo/giphy.gif"
