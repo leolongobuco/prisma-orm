@@ -4,7 +4,7 @@ import requireAuth from "../middlewares/requireAuth";
 
 const router = Router();
 
-router.post("/", requireAuth, UserController.store);
+router.post("/", UserController.store);
 router.get("/", UserController.index);
 router.get("/:userId", UserController.show);
 router.put("/:userId", requireAuth, UserController.update);

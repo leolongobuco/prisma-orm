@@ -9,16 +9,18 @@ class User {
 
     try {
       const passwordHash = await bcrypt.hash(password, 8);
+
       const user = await prisma.users.create({
         data: {
           email,
           password: passwordHash,
         },
+        select: {
+          email: true,
+          createdAt: true,
+        },
       });
-
-      const { createdAt } = user;
-
-      return response.status(201).json({ email, createdAt });
+      return response.status(201).json(user);
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
@@ -26,9 +28,15 @@ class User {
 
   async index(request: Request, response: Response) {
     try {
-      const users = await prisma.users.findMany();
+      const users = await prisma.users.findMany({
+        select: {
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
 
-      return response.status(200).json({ users });
+      return response.status(200).json(users);
     } catch (error) {
       return response.status(404).json({ error: error.message });
     }
@@ -42,9 +50,11 @@ class User {
         where: {
           id: Number(userId),
         },
+        select: {
+          email: true,
+        },
       });
-      const { email } = user;
-      return response.status(200).json(email);
+      return response.status(200).json(user);
     } catch (error) {
       return response.status(404).json({ error: error.message });
     }
@@ -62,9 +72,14 @@ class User {
         data: {
           password,
         },
+        select: {
+          id: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
-      const { id, email, createdAt, updatedAt } = newDataUser;
-      return response.status(200).json({ id, email, createdAt, updatedAt });
+      return response.status(200).json(newDataUser);
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
